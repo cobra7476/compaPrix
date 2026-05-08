@@ -1,9 +1,5 @@
 https://gemini.google.com/share/00b33cedb3c1
 
-C'est une vision très complète pour une V1.0 ! On sent que tu as déjà bien réfléchi à l'expérience utilisateur (UX). En intégrant la gestion des listes de courses dès le début, tu transformes l'outil d'un simple "annuaire de prix" en un véritable compagnon de quotidien.
-
-Voici la mise à jour du cahier des charges structuré pour ta V1.0, en intégrant tes nouvelles idées :
-
 1. Identité & Design
 Nom : CourseCheck (on garde celui-là ou un de ton choix).
 
