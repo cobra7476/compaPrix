@@ -30,6 +30,18 @@ while(true){
 
         case '1'://user
             echo $reponse.'ok, vous souhaitez enregister user '."\n\n";
+            $userName = readline("veuillez choisir votre nom d'utilisateur");
+            $userEmail = readline("veuillez entrer votre adresse email");
+            $userPass = readline("veuillez saisir votre mot de passe une premiére fois");
+            $userPassVerif = readline("veuillez saisir votre mot de passe une seconde fois");
+            $userTimestamp = new time("now", EUROPE);
+            echo "enregistrement terminé : \n
+                username = $userName\n
+                email = $userEmail\n
+                mot de passe : $userPass\n
+                verification du mot de passe : $userPassVerif\n
+                timestamp = $userTimestamp\n
+                ";
                 /*
                     user :
                         id : int (clé primaire)
