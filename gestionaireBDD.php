@@ -1,4 +1,13 @@
 <?php
+
+if (!function_exists('readline')) {
+    function readline($prompt = "") {
+        echo $prompt;
+        return rtrim(fgets(STDIN));
+    }
+}
+
+
 $choixPossible =  [ ['index'=>'0', 'title'=>'stop', 'description'=>'j\'ai fini, arreter le programme'],
                     ['index'=>'1', 'title'=>'user', 'description'=>'un utilisateur'],
                     ['index'=>'2', 'title'=>'product', 'description'=>'un produit'],
