@@ -19,11 +19,14 @@ class Product
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $brand = null;
-
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $type = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    private ?Brand $brand = null;
 
     public function getId(): ?int
     {
@@ -54,18 +57,6 @@ class Product
         return $this;
     }
 
-    public function getBrand(): ?string
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(?string $brand): static
-    {
-        $this->brand = $brand;
-
-        return $this;
-    }
-
     public function getType(): ?string
     {
         return $this->type;
@@ -74,6 +65,30 @@ class Product
     public function setType(?string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): static
+    {
+        $this->brand = $brand;
 
         return $this;
     }
