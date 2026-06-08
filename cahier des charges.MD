@@ -1,3 +1,27 @@
+# Cahier des Charges - CompaPrix
+
+## 1. Description du Projet
+CompaPrix est une application web (conçue en PHP/Symfony) destinée à faciliter les courses et à comparer le prix des produits selon les magasins. 
+
+## 2. Objectif de la Version 1 (MVP - "Mode Scannette")
+Le premier objectif fonctionnel est de transformer le smartphone en "scannette" de supermarché. 
+Pendant les courses, l'utilisateur scanne les produits qu'il met dans son caddie. L'application enregistre les informations et calcule le total du panier en temps réel (en euros).
+
+## 3. Fonctionnalités Clés (V1)
+* **Scan de code-barres :** Utilisation de l'appareil photo du smartphone via le navigateur (JavaScript) pour lire les codes-barres (EAN) des produits.
+* **Saisie des informations produit :** * *Obligatoire :* Code-barres, Prix, Magasin.
+    * *Facultatif :* Nom, Marque, Type (riz, sel, etc.).
+* **Gestion des magasins :** Possibilité de créer/sélectionner un magasin avant de commencer ses courses.
+* **Panier en cours (Le Caddie) :** Affichage d'une liste récapitulative des produits scannés lors de la session de courses en cours.
+* **Calculatrice intégrée :** Affichage en temps réel du coût total du caddie.
+
+## 4. Contraintes Techniques
+* **Technologies :** Backend en PHP avec le framework Symfony, base de données relationnelle (MySQL/MariaDB).
+* **Frontend :** Interface web "Mobile First" (pensée d'abord pour un affichage sur smartphone). JS pour la lecture du flux vidéo.
+* **Hors ligne (Évolution future) :** L'application devra à terme évoluer vers une PWA (Progressive Web App) pour permettre le scan et l'enregistrement dans la mémoire locale du téléphone lors des pertes de réseau dans les magasins, puis se synchroniser avec le serveur une fois la connexion retrouvée.
+
+
+//la suite est l'ancien cahier des charges, qui servira pour la suite
 https://gemini.google.com/share/00b33cedb3c1
 
 C'est une vision très complète pour une V1.0 ! On sent que tu as déjà bien réfléchi à l'expérience utilisateur (UX). En intégrant la gestion des listes de courses dès le début, tu transformes l'outil d'un simple "annuaire de prix" en un véritable compagnon de quotidien.
