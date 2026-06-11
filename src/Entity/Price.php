@@ -27,6 +27,10 @@ class Price
     #[ORM\JoinColumn(nullable: false)]
     private ?store $relation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'prices')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +80,18 @@ class Price
     public function setRelation(?store $relation): static
     {
         $this->relation = $relation;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
