@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -27,6 +29,29 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Brand $brand = null;
+
+    #[ORM\Column]
+    private ?bool $isComplete = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $capacity = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $unit = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $referenceUnit = null;
+
+    /**
+     * @var Collection<int, ProductImage>
+     */
+    #[ORM\OneToMany(targetEntity: ProductImage::class, mappedBy: 'product', orphanRemoval: true)]
+    private Collection $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +114,84 @@ class Product
     public function setBrand(?Brand $brand): static
     {
         $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function isComplete(): ?bool
+    {
+        return $this->isComplete;
+    }
+
+    public function setIsComplete(bool $isComplete): static
+    {
+        $this->isComplete = $isComplete;
+
+        return $this;
+    }
+
+    public function getCapacity(): ?float
+    {
+        return $this->capacity;
+    }
+
+    public function setCapacity(?float $capacity): static
+    {
+        $this->capacity = $capacity;
+
+        return $this;
+    }
+
+    public function getUnit(): ?string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?string $unit): static
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getReferenceUnit(): ?string
+    {
+        return $this->referenceUnit;
+    }
+
+    public function setReferenceUnit(?string $referenceUnit): static
+    {
+        $this->referenceUnit = $referenceUnit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductImage>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(ProductImage $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(ProductImage $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
+            }
+        }
 
         return $this;
     }
