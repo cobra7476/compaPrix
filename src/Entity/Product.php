@@ -52,9 +52,16 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    /**
+     * @var Collection<int, ShoppingListItem>
+     */
+    #[ORM\OneToMany(targetEntity: ShoppingListItem::class, mappedBy: 'product')]
+    private Collection $shoppingListItems;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->shoppingListItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,6 +215,36 @@ class Product
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ShoppingListItem>
+     */
+    public function getShoppingListItems(): Collection
+    {
+        return $this->shoppingListItems;
+    }
+
+    public function addShoppingListItem(ShoppingListItem $shoppingListItem): static
+    {
+        if (!$this->shoppingListItems->contains($shoppingListItem)) {
+            $this->shoppingListItems->add($shoppingListItem);
+            $shoppingListItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingListItem(ShoppingListItem $shoppingListItem): static
+    {
+        if ($this->shoppingListItems->removeElement($shoppingListItem)) {
+            // set the owning side to null (unless already changed)
+            if ($shoppingListItem->getProduct() === $this) {
+                $shoppingListItem->setProduct(null);
+            }
+        }
 
         return $this;
     }

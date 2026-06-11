@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ShoppingListRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ShoppingListRepository::class)]
@@ -22,6 +24,17 @@ class ShoppingList
     #[ORM\ManyToOne(inversedBy: 'shoppingLists')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
+
+    /**
+     * @var Collection<int, ShoppingListItem>
+     */
+    #[ORM\OneToMany(targetEntity: ShoppingListItem::class, mappedBy: 'shoppingList')]
+    private Collection $shoppingListItems;
+
+    public function __construct()
+    {
+        $this->shoppingListItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +73,36 @@ class ShoppingList
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ShoppingListItem>
+     */
+    public function getShoppingListItems(): Collection
+    {
+        return $this->shoppingListItems;
+    }
+
+    public function addShoppingListItem(ShoppingListItem $shoppingListItem): static
+    {
+        if (!$this->shoppingListItems->contains($shoppingListItem)) {
+            $this->shoppingListItems->add($shoppingListItem);
+            $shoppingListItem->setShoppingList($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingListItem(ShoppingListItem $shoppingListItem): static
+    {
+        if ($this->shoppingListItems->removeElement($shoppingListItem)) {
+            // set the owning side to null (unless already changed)
+            if ($shoppingListItem->getShoppingList() === $this) {
+                $shoppingListItem->setShoppingList(null);
+            }
+        }
 
         return $this;
     }
